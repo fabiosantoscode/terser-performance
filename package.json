@@ -1,0 +1,22 @@
+{
+  "name": "terser-performance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "large-sample.js",
+  "scripts": {
+    "test": "npm run benchmark && npm run profile",
+    "benchmark": "npm run benchmark-medium && npm run benchmark-large",
+    "benchmark-medium": "benchmark -- node run-terser.js ./medium-sample.js",
+    "benchmark-large": "benchmark -- node run-terser.js ./large-sample.js",
+    "profile": "npm run profile-medium && npm run profile-large",
+    "profile-medium": "node run-terser.js medium-sample.js CPU_PROFILE && node run-terser.js medium-sample.js HEAP_PROFILE",
+    "profile-large": "node run-terser.js large-sample.js CPU_PROFILE && node run-terser.js large-sample.js HEAP_PROFILE"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@angular-devkit/benchmark": "file:angular-devkit-benchmark-0.800.0-beta.18.tgz",
+    "terser": "^4.3.2"
+  }
+}
