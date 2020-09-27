@@ -1,5 +1,5 @@
 const fs = require('fs');
-const Terser = require('terser');
+const Terser = require('..');
 const { profileWrapFn } = require('./profiler');
 
 const inputFileName = process.argv[2];
@@ -19,15 +19,12 @@ const terserOptions = {
     passes: 3,
     global_defs: { ngDevMode: false, ngI18nClosureMode: false }
   },
+  sourceMap: true,
   mangle: true
 };
 
 
-profileWrapFn(() => {
-  const result = Terser.minify(input, terserOptions);
-  if (result.error) {
-    throw new Error(result.error);
-  } else {
-    fs.writeFileSync(`${inputFileName}.min.js`, result.code);
-  }
+profileWrapFn(async () => {
+  const { code } = await Terser.minify(input, terserOptions);
+  fs.writeFileSync(`${inputFileName}.min.js`, code);
 }, { type: process.argv[3] });
